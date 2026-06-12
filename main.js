@@ -59,6 +59,19 @@ function setupHTML() {
   </script></body></html>`;
 }
 
+function openSetup() {
+  const win = new BrowserWindow({
+    width: 420,
+    height: 220,
+    resizable: false,
+    title: "Setup",
+    webPreferences: { nodeIntegration: true, contextIsolation: false },
+  });
+  win.loadURL(`data:text/html,${encodeURIComponent(setupHTML())}`);
+  win.setMenuBarVisibility(false);
+  win.focus();
+}
+
 app.whenReady().then(() => {
   app.dock?.hide();
 
@@ -80,9 +93,13 @@ app.whenReady().then(() => {
     bridge.setClientId(id);
   });
 
-  setInterval(() => {
+ setInterval(() => {
     tray.setContextMenu(buildMenu());
   }, 5000);
+
+  if (!bridge.getClientId()) {
+    setTimeout(openSetup, 500);
+  }
 });
 
 app.on("window-all-closed", (e) => e.preventDefault());
