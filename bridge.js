@@ -9,7 +9,7 @@ const CONFIG_PATH = path.join(
   "roblox-studio-rpc-config.json"
 );
 
-let clientId = loadConfig();
+let clientId = loadConfig() || "1514806686643388426";
 let rpcClient = null;
 let rpcReady = false;
 let statusDiscord = "Disconnected";
